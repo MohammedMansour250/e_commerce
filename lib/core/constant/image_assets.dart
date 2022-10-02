@@ -1,0 +1,1 @@
+class ImageAssets{  static const String routImage = 'assets/images' ; static const String onBoardingImageOne   = '$routImage/one.PNG'; static const String onBoardingImageTwo   = '$routImage/two.PNG'; static const String onBoardingImageThree  = '$routImage/three.PNG'; static const String logo                    = '$routImage/logo.png';}
