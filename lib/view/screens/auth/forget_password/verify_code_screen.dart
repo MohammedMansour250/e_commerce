@@ -1,17 +1,19 @@
 import 'package:e_commerce_project/controller/auth/forget_password_controller.dart';
 import 'package:e_commerce_project/controller/auth/verify_code_controller.dart';
+import 'package:e_commerce_project/core/functions/statusRequest.dart';
 import 'package:e_commerce_project/view/widgets/auth/app_text_field.dart';
 import 'package:e_commerce_project/view/widgets/auth/custom_button_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class VerifyCodeScreen extends StatelessWidget {
-  const VerifyCodeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     VerifyCodeControllerImp controllerImp = Get.put(VerifyCodeControllerImp());
+
+    String verify = '';
 
     return Scaffold(
       // backgroundColor: Color(0xFFF5F7FBFF),
@@ -28,7 +30,7 @@ class VerifyCodeScreen extends StatelessWidget {
         ],
         centerTitle: true,
         title: Text(
-          "Verification Code",
+          "Verification Password Code",
           style: Theme.of(context).textTheme.headline1!.copyWith(
               color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -38,7 +40,7 @@ class VerifyCodeScreen extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
-              spaca(Get.height / 4, 0),
+              space(Get.height / 4, 0),
               Align(
                 alignment: AlignmentDirectional.center,
                 child: Text(
@@ -49,7 +51,7 @@ class VerifyCodeScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              spaca(30, 0),
+              space(30, 0),
 
               OtpTextField(
                 numberOfFields: 5,
@@ -58,13 +60,20 @@ class VerifyCodeScreen extends StatelessWidget {
                 showFieldAsBox: true,
                 //runs when a code is typed in
                 onCodeChanged: (String code) {
+                  print(Get.arguments['email'].toString());
                   //handle validation or checks here
                 },
                 //runs when every textfield is filled
                 onSubmit: (String verificationCode) {
-                  controllerImp.go_to_reset_password();
+                    verify = verificationCode ;
+                  print(Get.arguments['email']);
+                  print(verificationCode);
+
+                  controllerImp.checkCode(
+                      Get.arguments['email'], verificationCode, context);
                 }, // end onSubmit
               ),
+              // 46496
               // AppTextField(
               //   labal: 'Code',
               //   hintText: 'Enter Your Code',
@@ -72,8 +81,13 @@ class VerifyCodeScreen extends StatelessWidget {
               //   controller: controllerImp.text_field_email_controller,
               //   context: context,
               // ),
-              spaca(20, 0),
-              Custom_Button_Auth(txt: 'Check Code', onPressed: () {}),
+              space(20, 0),
+              Custom_Button_Auth(
+                  txt: 'Check Code',
+                  onPressed: () {
+                    controllerImp.checkCode(
+                        Get.arguments['email'], verify, context);
+                  }),
             ],
           ),
         ),
