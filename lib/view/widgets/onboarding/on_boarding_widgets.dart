@@ -57,9 +57,11 @@ class Custom_Dot_Controller_OnBoarding extends StatelessWidget {
       init: OnBoardingControllerImp(),
       builder: (logic) {
         return Row(
+          textDirection: TextDirection.ltr,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ...List.generate(
+
               onBoardingList.length,
               (index) => AnimatedContainer(
                 margin: EdgeInsets.only(right: 5),
@@ -90,6 +92,7 @@ class Custom_Button_OnBoarding extends GetView<OnBoardingControllerImp> {
       margin: EdgeInsets.only(bottom: 30),
       height: 40,
       child: MaterialButton(
+        // clipBehavior: Clip.antiAlias,
         padding: EdgeInsets.symmetric(
           horizontal: 100,
           vertical: 0,
@@ -98,7 +101,7 @@ class Custom_Button_OnBoarding extends GetView<OnBoardingControllerImp> {
           controller.next();
         },
         textColor: Colors.white,
-        color: Colors.blueAccent,
+        color: Colors.deepOrangeAccent,
         child: Text('Continue'),
       ),
     );
